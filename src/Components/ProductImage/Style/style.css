@@ -1,0 +1,23 @@
+.image-container {
+  width: 45%;
+  height: 80%;
+  background-color: #dfdfdf;
+  border-radius: 20px;
+  padding: 0px 20px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image-wrapper {
+  padding: 20px 0px;
+  height: 80%;
+  width: 100%;
+  /* background-image: url("../../../assets/lemon.jpg"); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 5px;
+}

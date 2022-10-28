@@ -12,8 +12,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.4",
+    "react-router-dom": "^6.4.2",
+    "vazirmatn": "^33.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

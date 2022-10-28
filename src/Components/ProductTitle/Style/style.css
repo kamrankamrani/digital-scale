@@ -1,0 +1,15 @@
+.text-container {
+  display: flex;
+  color: #212121;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 15px;
+}
+
+.text-container .title {
+  font-size: 18px;
+}
+
+.text-container .weight {
+  font-size: 18px;
+}

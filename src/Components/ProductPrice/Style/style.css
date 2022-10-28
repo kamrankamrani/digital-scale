@@ -1,0 +1,47 @@
+.text-container {
+  display: flex;
+  color: #212121;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.text-container .price {
+  font-size: 16px;
+}
+
+.price-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.off-container {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  flex-direction: row-reverse;
+}
+
+.off-container .off p {
+  background-color: green;
+  border-radius: 10px;
+  padding: 2px 4px;
+  text-align: center;
+  color: #f6f6f6;
+}
+
+.final-price-container {
+  display: flex;
+  justify-content: center;
+}
+
+.off-container .text {
+  text-decoration: line-through;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.final-price-container .text {
+  font-size: 18px;
+  color: #4d4d4d;
+}
