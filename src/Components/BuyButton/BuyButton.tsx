@@ -1,9 +1,30 @@
+import useWebSocket from "react-use-websocket";
+import { useAppSelector } from "../../hooks";
+import { ReadyState } from "react-use-websocket";
 import "./Style/style.css";
 
 export default function BuyButton() {
+  const socketUrl = useAppSelector((state) => state.webSocket.socketUrl);
+  const connectionStatus = useAppSelector(
+    (state) => state.webSocket.connectionStatus
+  );
+  const { sendMessage } = useWebSocket(socketUrl);
+
+  const handleButtonClick = () => {
+    sendMessage("purchase complete!");
+  };
+
   return (
     <div className="button-container">
-      <button className="button">تایید و چاپ برچسب</button>
+      <button
+        disabled={connectionStatus !== ReadyState.OPEN}
+        className={`button ${
+          connectionStatus !== ReadyState.OPEN ? "disable" : ""
+        }`}
+        onClick={handleButtonClick}
+      >
+        تایید و چاپ برچسب
+      </button>
     </div>
   );
 }

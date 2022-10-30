@@ -1,0 +1,38 @@
+.snack-container {
+  position: absolute;
+  padding: 0px 10px;
+  border-radius: 10px;
+  background-color: #ed4337;
+  bottom: -80px;
+}
+
+.snack-container p {
+  direction: rtl;
+  color: #f9f9f9;
+}
+
+.snack-container.error {
+  animation: errorShow 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+.snack-container.opened {
+  animation: hideError 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+@keyframes errorShow {
+  from {
+    bottom: -80px;
+  }
+  to {
+    bottom: 10px;
+  }
+}
+
+@keyframes hideError {
+  from {
+    bottom: 10px;
+  }
+  to {
+    bottom: -80px;
+  }
+}

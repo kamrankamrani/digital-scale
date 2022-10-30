@@ -16,4 +16,9 @@
   padding: 10px;
   background-color: #1f51ff;
   color: #fafafa;
+  cursor: pointer;
+}
+
+.button.disable {
+  opacity: 0.6;
 }
