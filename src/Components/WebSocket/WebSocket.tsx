@@ -24,9 +24,10 @@ export default function WebSocket() {
     // console.log("message is", message);
     const parsedJson: ScaleResponseType = JSON.parse(message.data);
     console.log("core message is", parsedJson);
-    if (parsedJson.isDefault !== undefined && !parsedJson.isDefault) {
-      dispatch(setScaleResponse(parsedJson));
-    } else if (parsedJson.isDefault !== undefined && parsedJson.isDefault) {
+    // if (parsedJson.isDefault !== undefined && !parsedJson.isDefault) {
+
+    // }
+    if (parsedJson.isDefault !== undefined && parsedJson.isDefault) {
       const data_: ScaleResponseType = {
         url: "",
         client: "",
@@ -36,8 +37,11 @@ export default function WebSocket() {
         raw_price: 0,
         title: "",
         weight: 0,
+        isImage: false,
       };
       dispatch(setScaleResponse(data_));
+    } else {
+      dispatch(setScaleResponse(parsedJson));
     }
   }
 

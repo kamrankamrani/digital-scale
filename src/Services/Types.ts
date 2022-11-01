@@ -7,6 +7,7 @@ export interface ScaleResponseType {
   client: string;
   weight: number;
   title: string;
+  isImage: boolean;
 }
 
 export interface WebSocketType {

@@ -8,9 +8,10 @@ const initialState: ScaleResponseType = {
   off: 0,
   final_price: 0,
   isDefault: false,
-  client: "",
+  client: "UI",
   weight: 0,
   title: "",
+  isImage: false,
   // imageUrl: "/src/assets/lemon.jpg",
 };
 
@@ -25,6 +26,7 @@ const ProductSlice = createSlice({
       state.raw_price = action.payload.raw_price;
       state.title = action.payload.title;
       state.weight = action.payload.weight;
+      state.isImage = action.payload.isImage;
     },
   },
 });
