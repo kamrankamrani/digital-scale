@@ -1,11 +1,15 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks";
 import CachedRoundedIcon from "@mui/icons-material/CachedRounded";
 import "./Style/style.css";
+import Modal from "../Modal/Modal";
 
 export default function ProductImage() {
   const [imageEl, setImageEl] = useState<HTMLDivElement | null>(null);
   const [changeItem, setChangeItem] = useState<boolean>(true);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const imageUrl: string = useAppSelector((state) => state.product.url);
   const altImages = useAppSelector((state) => state.product.alt_images);
   // const mockImageUrl = "/src/assets/lemon.jpg";
@@ -51,6 +55,10 @@ export default function ProductImage() {
     }
   }, [imageUrl]);
 
+  const handleChangeItemClick = () => {
+    setShowModal(!showModal);
+  };
+
   return (
     <div className="image-container">
       <div id="product-image" className="image-wrapper">
@@ -58,11 +66,13 @@ export default function ProductImage() {
           className={`change-item ${changeItem ? "show-change-item" : ""}`}
           id="change-item"
           role={"button"}
+          onClick={handleChangeItemClick}
         >
           <p>تغییر محصول</p>
           <CachedRoundedIcon fontSize="small" />
         </div>
       </div>
+      {showModal && <Modal showModal={showModal} setShowModal={setShowModal} />}
     </div>
   );
 }

@@ -12,7 +12,17 @@ const initialState: ScaleResponseType = {
   weight: 0,
   title: "",
   isImage: false,
-  alt_images: [],
+  alt_images: [
+    {
+      url: "",
+    },
+    {
+      url: "",
+    },
+    {
+      url: "",
+    },
+  ],
 };
 
 const ProductSlice = createSlice({

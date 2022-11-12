@@ -17,3 +17,8 @@ export interface WebSocketType {
   socketUrl: string;
   connectionStatus: number;
 }
+
+export interface ModalProps {
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
