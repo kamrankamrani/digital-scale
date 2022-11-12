@@ -1,10 +1,10 @@
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { useEffect } from "react";
-import "./Style/style.css";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setWebSocketStatus } from "../../features/webSocketSlice/webSocketSlice";
 import { ScaleResponseType } from "../../Services/Types";
 import { setScaleResponse } from "../../features/ProductSlice/ProductSlice";
+import "./Style/style.css";
 
 export default function WebSocket() {
   const socketUrl = useAppSelector((state) => state.webSocket.socketUrl);
@@ -21,12 +21,8 @@ export default function WebSocket() {
   });
 
   function handleSocketMessage(message: MessageEvent) {
-    // console.log("message is", message);
     const parsedJson: ScaleResponseType = JSON.parse(message.data);
     console.log("core message is", parsedJson);
-    // if (parsedJson.isDefault !== undefined && !parsedJson.isDefault) {
-
-    // }
     if (parsedJson.isDefault !== undefined && parsedJson.isDefault) {
       const data_: ScaleResponseType = {
         url: "",

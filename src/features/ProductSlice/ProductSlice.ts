@@ -12,7 +12,7 @@ const initialState: ScaleResponseType = {
   weight: 0,
   title: "",
   isImage: false,
-  // imageUrl: "/src/assets/lemon.jpg",
+  alt_images: [],
 };
 
 const ProductSlice = createSlice({

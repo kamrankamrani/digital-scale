@@ -8,6 +8,9 @@ export interface ScaleResponseType {
   weight: number;
   title: string;
   isImage: boolean;
+  alt_images: {
+    url: string;
+  }[];
 }
 
 export interface WebSocketType {

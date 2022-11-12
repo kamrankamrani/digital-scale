@@ -1,0 +1,27 @@
+.top-menu .menu {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 8px 5px;
+  border-radius: 10px;
+  background-color: #fcfcfc;
+  transform-origin: top right;
+  transform: scale(0);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.menu .menu-item {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  padding: 0;
+}
+
+.menu .menu-item p {
+  font-size: small;
+  padding: 0;
+  margin: 0;
+  color: #212121;
+}

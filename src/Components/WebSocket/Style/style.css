@@ -4,6 +4,7 @@
   border-radius: 10px;
   background-color: #ed4337;
   bottom: -80px;
+  z-index: 5;
 }
 
 .snack-container p {
@@ -34,5 +35,30 @@
   }
   to {
     bottom: -80px;
+  }
+}
+
+@media (max-width: 900px) {
+  .snack-container {
+    top: 10px;
+    height: fit-content;
+  }
+
+  @keyframes errorShow {
+    from {
+      top: -80px;
+    }
+    to {
+      top: 10px;
+    }
+  }
+
+  @keyframes hideError {
+    from {
+      top: 10px;
+    }
+    to {
+      top: -80px;
+    }
   }
 }

@@ -6,6 +6,7 @@
   background-color: #fcfcfc;
   position: relative;
   overflow: hidden;
+  flex-direction: column;
 }
 
 .home-container .content-wrapper {
@@ -13,7 +14,105 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 50px;
   height: 80vh;
   flex-direction: row-reverse;
+}
+
+.top-menu {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  top: 15px;
+  right: 15px;
+  position: absolute;
+  cursor: pointer;
+  flex-direction: column;
+  row-gap: 5px;
+  z-index: 5;
+}
+
+.top-menu .icon {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #3d7090;
+  color: #fcfcfc;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.icon .icon-item {
+  position: absolute;
+}
+
+.icon-show {
+  visibility: visible;
+}
+
+.icon-hide {
+  visibility: hidden;
+}
+
+.show {
+  animation: showIcon 300ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+.hide {
+  animation: hideIcon 300ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+.show-menu {
+  animation: showMenu 300ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+.hide-menu {
+  animation: hideMenu 300ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+@keyframes showIcon {
+  0% {
+    transform: scale(0) rotate(0);
+  }
+  100% {
+    transform: scale(1) rotate(720deg);
+  }
+}
+
+@keyframes hideIcon {
+  0% {
+    transform: scale(1) rotate(0);
+  }
+  100% {
+    transform: scale(0) rotate(-720deg);
+  }
+}
+
+@keyframes showMenu {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes hideMenu {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .home-container .content-wrapper {
+    row-gap: 20px;
+    height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+  }
 }
