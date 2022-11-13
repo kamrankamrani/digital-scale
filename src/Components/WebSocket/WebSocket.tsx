@@ -34,6 +34,7 @@ export default function WebSocket() {
         title: "",
         weight: 0,
         isImage: false,
+        alt_images: [],
       };
       dispatch(setScaleResponse(data_));
     } else {

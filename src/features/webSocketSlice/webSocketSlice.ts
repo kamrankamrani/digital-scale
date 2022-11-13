@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { WebSocketType } from "../../Services/Types";
 
 const initialState: WebSocketType = {
-  socketUrl: "ws://127.0.0.1:4000",
+  socketUrl: "ws://localhost:4000",
   connectionStatus: -1,
 };
 

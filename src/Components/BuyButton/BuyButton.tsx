@@ -11,7 +11,10 @@ export default function BuyButton() {
   const { sendMessage } = useWebSocket(socketUrl);
 
   const handleButtonClick = () => {
-    sendMessage("purchase complete!");
+    const msg = {
+      message: "complete",
+    };
+    sendMessage(JSON.stringify(msg));
   };
 
   return (

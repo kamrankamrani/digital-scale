@@ -8,42 +8,59 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useEffect, useState } from "react";
 import IconsMenu from "../IconsMenu/IconsMenu";
 import "./Style/style.css";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { setSideMenuOpen } from "../../features/modalsSlice/modalsSlice";
 
 export default function Home() {
-  const [openMenu, setOpenMenu] = useState(false);
+  // const [openMenu, setOpenMenu] = useState(false);
+  const openSideMenu = useAppSelector(
+    (state) => state.modalSlice.isSideMenuOpen
+  );
   const [menuIconEl, setMenuIconEl] = useState<Element | null>(null);
   const [closeIconEl, setCloseIconEl] = useState<Element | null>(null);
   const [menuContainerEl, setMenuContainerEl] = useState<Element | null>(null);
+  const dispatch = useAppDispatch();
+
+  const openSideMenuAnimation = () => {
+    if (!menuIconEl || !closeIconEl) {
+      return;
+    }
+    menuIconEl.classList.remove("show");
+    closeIconEl.classList.remove("hide");
+    menuIconEl.classList.add("hide");
+    closeIconEl.classList.add("show");
+    if (menuContainerEl) {
+      menuContainerEl.classList.remove("hide-menu");
+      menuContainerEl.classList.add("show-menu");
+    }
+  };
+
+  const closeSideMenuAnimation = () => {
+    if (!menuIconEl || !closeIconEl) {
+      return;
+    }
+    menuIconEl.classList.remove("hide");
+    closeIconEl.classList.remove("show");
+    menuIconEl.classList.add("show");
+    closeIconEl.classList.add("hide");
+    if (menuContainerEl) {
+      menuContainerEl.classList.remove("show-menu");
+      menuContainerEl.classList.add("hide-menu");
+    }
+  };
 
   const handleMenuClick = () => {
-    if (!openMenu) {
-      if (!menuIconEl || !closeIconEl) {
-        return;
-      }
-      menuIconEl.classList.remove("show");
-      closeIconEl.classList.remove("hide");
-      menuIconEl.classList.add("hide");
-      closeIconEl.classList.add("show");
-      if (menuContainerEl) {
-        menuContainerEl.classList.remove("hide-menu");
-        menuContainerEl.classList.add("show-menu");
-      }
+    dispatch(setSideMenuOpen(!openSideMenu));
+  };
+
+  useEffect(() => {
+    if (openSideMenu) {
+      openSideMenuAnimation();
     } else {
       //open menu true
-      if (!menuIconEl || !closeIconEl) {
-        return;
-      }
-      menuIconEl.classList.remove("hide");
-      closeIconEl.classList.remove("show");
-      menuIconEl.classList.add("show");
-      closeIconEl.classList.add("hide");
-      if (menuContainerEl) {
-        menuContainerEl.classList.remove("show-menu");
-        menuContainerEl.classList.add("hide-menu");
-      }
+      closeSideMenuAnimation();
     }
-    setOpenMenu(!openMenu);
-  };
+  }, [openSideMenu]);
 
   useEffect(() => {
     const menuEl_ = document.querySelector("#menu-icon");
