@@ -1,10 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { WebSocketType } from "../../Services/Types";
+import { WebSocketType, wsSendMessageType } from "../../Services/Types";
+import type { SendMessage } from "react-use-websocket";
 
 const initialState: WebSocketType = {
   socketUrl: "ws://localhost:4000",
   connectionStatus: -1,
+  wsSendMessage: {
+    isMessage: false,
+    body: {
+      client: "",
+      message: "",
+    },
+  },
 };
 
 const webSocketSlice = createSlice({
@@ -14,8 +22,11 @@ const webSocketSlice = createSlice({
     setWebSocketStatus(state, action: PayloadAction<number>) {
       state.connectionStatus = action.payload;
     },
+    setWsSendMessage(state, action: PayloadAction<wsSendMessageType>) {
+      state.wsSendMessage = action.payload;
+    },
   },
 });
 
 export default webSocketSlice.reducer;
-export const { setWebSocketStatus } = webSocketSlice.actions;
+export const { setWebSocketStatus, setWsSendMessage } = webSocketSlice.actions;

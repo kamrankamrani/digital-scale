@@ -2,24 +2,25 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import LinearScaleRoundedIcon from "@mui/icons-material/LinearScaleRounded";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import useWebSocket from "react-use-websocket";
-import "./Style/style.css";
+import { useAppDispatch } from "../../hooks";
 import { setSideMenuOpen } from "../../features/modalsSlice/modalsSlice";
+import { wsSendMessageType } from "../../Services/Types";
+import { setWsSendMessage } from "../../features/webSocketSlice/webSocketSlice";
+import "./Style/style.css";
 
 export default function IconsMenu() {
-  const socketUrl = useAppSelector((state) => state.webSocket.socketUrl);
   const dispatch = useAppDispatch();
-  // const connectionStatus = useAppSelector(
-  //   (state) => state.webSocket.connectionStatus
-  // );
-  const { sendMessage } = useWebSocket(socketUrl);
 
   const handleTareClick = () => {
-    const msg = {
-      message: "tare",
+    const msg: wsSendMessageType = {
+      body: {
+        client: "UI",
+        message: "tare",
+      },
+      isMessage: true,
     };
-    sendMessage(JSON.stringify(msg));
+
+    dispatch(setWsSendMessage(msg));
     dispatch(setSideMenuOpen(false));
   };
 

@@ -1,20 +1,26 @@
 import useWebSocket from "react-use-websocket";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { ReadyState } from "react-use-websocket";
+import { setWsSendMessage } from "../../features/webSocketSlice/webSocketSlice";
+import { wsSendMessageType } from "../../Services/Types";
 import "./Style/style.css";
 
 export default function BuyButton() {
-  const socketUrl = useAppSelector((state) => state.webSocket.socketUrl);
   const connectionStatus = useAppSelector(
     (state) => state.webSocket.connectionStatus
   );
-  const { sendMessage } = useWebSocket(socketUrl);
+  const dispatch = useAppDispatch();
 
   const handleButtonClick = () => {
-    const msg = {
-      message: "complete",
+    const msg: wsSendMessageType = {
+      body: {
+        client: "UI",
+        message: "complete",
+      },
+      isMessage: true,
     };
-    sendMessage(JSON.stringify(msg));
+
+    dispatch(setWsSendMessage(msg));
   };
 
   return (

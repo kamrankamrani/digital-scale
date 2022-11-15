@@ -1,3 +1,5 @@
+import type { SendMessage } from "react-use-websocket";
+
 export interface ScaleResponseType {
   url: string;
   raw_price: number;
@@ -13,9 +15,18 @@ export interface ScaleResponseType {
   }[];
 }
 
+export interface wsSendMessageType {
+  isMessage: boolean;
+  body: {
+    client: string;
+    message: string;
+  };
+}
+
 export interface WebSocketType {
   socketUrl: string;
   connectionStatus: number;
+  wsSendMessage: wsSendMessageType;
 }
 
 export interface ModalProps {

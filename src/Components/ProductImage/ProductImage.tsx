@@ -13,8 +13,7 @@ export default function ProductImage() {
   const imageUrl: string = useAppSelector((state) => state.product.url);
   const altImages = useAppSelector((state) => state.product.alt_images);
   // const mockImageUrl = "/src/assets/lemon.jpg";
-  // const mockImageUrl =
-  //   "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Lemon.jpg/640px-Lemon.jpg";
+  const mockImageUrl = "https://picsum.photos/id/237/1000/1000";
 
   useEffect(() => {
     const el_ = document.querySelector("#product-image") as HTMLDivElement;

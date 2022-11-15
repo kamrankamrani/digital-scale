@@ -9,6 +9,10 @@ export const store = configureStore({
     webSocket: webSocketSliceReducer,
     modalSlice: modalsSliceReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
