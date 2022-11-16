@@ -8,6 +8,10 @@ import {
 import { ScaleResponseType, wsSendMessageType } from "../../Services/Types";
 import { setScaleResponse } from "../../features/ProductSlice/ProductSlice";
 import "./Style/style.css";
+import {
+  setDisableBuyButtonState,
+  setPageLoadingState,
+} from "../../features/pageRenderSlice/pageRenderSlice";
 
 export default function WebSocket() {
   const socketUrl = useAppSelector((state) => state.webSocket.socketUrl);
@@ -36,28 +40,45 @@ export default function WebSocket() {
     share: true,
     retryOnError: true,
     reconnectInterval: 3000,
-    reconnectAttempts: 1000, //3s * 1000 = 3000s or 5 minutes
+    reconnectAttempts: 1000, //3s * 1000 = 3000s or 50 minutes
   });
 
   function handleSocketMessage(message: MessageEvent) {
     const parsedJson: ScaleResponseType = JSON.parse(message.data);
     console.log("core message is", parsedJson);
-    if (parsedJson.isDefault !== undefined && parsedJson.isDefault) {
+    dispatch(setPageLoadingState(false)); //new message = loading false
+    dispatch(setDisableBuyButtonState(true));
+
+    if (parsedJson.client === "UI") {
+      // it is echo message
+      return;
+    }
+
+    if (!parsedJson.message) {
+      console.log("data format error!", parsedJson);
+      return;
+    }
+
+    if (parsedJson.message === "default") {
       const data_: ScaleResponseType = {
         url: "",
         client: "",
         final_price: 0,
-        isDefault: false,
         off: 0,
         raw_price: 0,
         title: "",
         weight: 0,
         isImage: false,
         alt_images: [],
+        message: "",
       };
       dispatch(setScaleResponse(data_));
-    } else {
+    } else if (parsedJson.message === "weight") {
       dispatch(setScaleResponse(parsedJson));
+      dispatch(setDisableBuyButtonState(false));
+    } else if (parsedJson.message === "start") {
+      //start
+      dispatch(setPageLoadingState(true));
     }
   }
 

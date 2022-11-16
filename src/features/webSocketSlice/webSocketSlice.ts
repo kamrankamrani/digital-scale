@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { WebSocketType, wsSendMessageType } from "../../Services/Types";
-import type { SendMessage } from "react-use-websocket";
 
 const initialState: WebSocketType = {
   socketUrl: "ws://localhost:4000",

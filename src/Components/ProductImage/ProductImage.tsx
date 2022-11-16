@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks";
 import CachedRoundedIcon from "@mui/icons-material/CachedRounded";
-import "./Style/style.css";
 import Modal from "../Modal/Modal";
+import "./Style/style.css";
 
 export default function ProductImage() {
   const [imageEl, setImageEl] = useState<HTMLDivElement | null>(null);
@@ -12,8 +12,10 @@ export default function ProductImage() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const imageUrl: string = useAppSelector((state) => state.product.url);
   const altImages = useAppSelector((state) => state.product.alt_images);
-  // const mockImageUrl = "/src/assets/lemon.jpg";
-  const mockImageUrl = "https://picsum.photos/id/237/1000/1000";
+  const loadingState = useAppSelector(
+    (state) => state.pageRenderSlice.loadingState
+  );
+  // const mockImageUrl = "https://picsum.photos/id/237/1000/1000";
 
   useEffect(() => {
     const el_ = document.querySelector("#product-image") as HTMLDivElement;
@@ -44,15 +46,27 @@ export default function ProductImage() {
       }
       return;
     }
-
-    if (imageUrl && imageEl) {
-      imageEl.style.backgroundImage = `url("${imageUrl}")`;
-      imageEl.style.backgroundColor = "#fff";
-    } else {
-      imageEl.style.backgroundImage = `url("")`;
-      imageEl.style.backgroundColor = "#cfcfcf";
+    if (imageEl) {
+      if (imageUrl) {
+        imageEl.style.backgroundImage = `url("${imageUrl}")`;
+        imageEl.style.backgroundColor = "#fff";
+      } else {
+        imageEl.style.backgroundImage = `url("")`;
+        imageEl.style.backgroundColor = "#cfcfcf";
+      }
     }
   }, [imageUrl]);
+
+  useEffect(() => {
+    if (imageEl) {
+      if (loadingState) {
+        imageEl.style.backgroundImage = `none`;
+      } else {
+        imageEl.style.backgroundImage = `url("")`;
+        imageEl.style.backgroundColor = "#cfcfcf";
+      }
+    }
+  }, [loadingState]);
 
   const handleChangeItemClick = () => {
     setShowModal(!showModal);
@@ -60,7 +74,10 @@ export default function ProductImage() {
 
   return (
     <div className="image-container">
-      <div id="product-image" className="image-wrapper">
+      <div
+        id="product-image"
+        className={`image-wrapper ${loadingState ? "loading-skeleton" : ""}`}
+      >
         <div
           className={`change-item ${changeItem ? "show-change-item" : ""}`}
           id="change-item"

@@ -7,11 +7,11 @@ const initialState: ScaleResponseType = {
   raw_price: 0,
   off: 0,
   final_price: 0,
-  isDefault: false,
   client: "UI",
   weight: 0,
   title: "",
   isImage: false,
+  message: "",
   alt_images: [
     {
       url: "",
