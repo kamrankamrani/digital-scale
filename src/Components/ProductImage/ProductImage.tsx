@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks";
 import CachedRoundedIcon from "@mui/icons-material/CachedRounded";
 import Modal from "../Modal/Modal";
+import Loading from "../Loading/Loading";
 import "./Style/style.css";
 
 export default function ProductImage() {
@@ -58,14 +59,14 @@ export default function ProductImage() {
   }, [imageUrl]);
 
   useEffect(() => {
-    if (imageEl) {
-      if (loadingState) {
-        imageEl.style.backgroundImage = `none`;
-      } else {
-        imageEl.style.backgroundImage = `url("")`;
-        imageEl.style.backgroundColor = "#cfcfcf";
-      }
-    }
+    // if (imageEl) {
+    //   if (loadingState) {
+    //     imageEl.style.backgroundImage = `none`;
+    //   } else {
+    //     imageEl.style.backgroundImage = `url("")`;
+    //     imageEl.style.backgroundColor = "#cfcfcf";
+    //   }
+    // }
   }, [loadingState]);
 
   const handleChangeItemClick = () => {
@@ -74,10 +75,7 @@ export default function ProductImage() {
 
   return (
     <div className="image-container">
-      <div
-        id="product-image"
-        className={`image-wrapper ${loadingState ? "loading-skeleton" : ""}`}
-      >
+      <div id="product-image" className="image-wrapper">
         <div
           className={`change-item ${changeItem ? "show-change-item" : ""}`}
           id="change-item"
@@ -87,6 +85,7 @@ export default function ProductImage() {
           <p>تغییر محصول</p>
           <CachedRoundedIcon fontSize="small" />
         </div>
+        {loadingState && <Loading />}
       </div>
       {showModal && <Modal showModal={showModal} setShowModal={setShowModal} />}
     </div>

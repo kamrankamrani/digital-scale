@@ -76,8 +76,8 @@ export default function WebSocket() {
     } else if (parsedJson.message === "weight") {
       dispatch(setScaleResponse(parsedJson));
       dispatch(setDisableBuyButtonState(false));
-    } else if (parsedJson.message === "start") {
-      //start
+    } else if (parsedJson.message === "loading") {
+      //start loading
       dispatch(setPageLoadingState(true));
     }
   }
