@@ -6,15 +6,16 @@
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:cypress/recommended",
     // "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier"
   ],
-  "plugins": ["react", "jsx-a11y", "import", "@typescript-eslint"],
+  "plugins": ["react", "jsx-a11y", "import", "@typescript-eslint", "cypress"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2022,
     "sourceType": "module",
-    "project": ["./tsconfig.json"],
+    "project": ["./tsconfig.json", "./cypress.config.ts", "./vite.config.ts"],
     "ecmaFeatures": {
       "jsx": true
     }
@@ -22,12 +23,19 @@
   "env": {
     "es6": true,
     "browser": true,
-    "node": true
+    "node": true,
+    "cypress/globals": true
   },
   "rules": {
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0,
-    "@typescript-eslint/no-empty-functions": 0
+    "@typescript-eslint/no-empty-functions": 0,
+    "cypress/no-assigning-return-values": "error",
+    "cypress/no-unnecessary-waiting": "error",
+    "cypress/assertion-before-screenshot": "warn",
+    "cypress/no-force": "warn",
+    "cypress/no-async-tests": "error",
+    "cypress/no-pause": "error"
   },
   "settings": {
     "react": {

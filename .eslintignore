@@ -1,5 +1,8 @@
 node_modules/
 dist/
-.prettierrc.js
+.prettierrc
 .eslintrc.js
+.eslintrc
+cypress.config.ts
+vite.config.ts
 env.d.ts
