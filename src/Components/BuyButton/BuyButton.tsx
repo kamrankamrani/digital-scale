@@ -24,6 +24,7 @@ export default function BuyButton() {
   return (
     <div className="button-container">
       <button
+        data-test="buy-button"
         disabled={disableButon}
         className={`button ${disableButon ? "disable" : ""}`}
         onClick={handleButtonClick}

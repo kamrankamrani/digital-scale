@@ -7,9 +7,9 @@ import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useEffect, useState } from "react";
 import IconsMenu from "../IconsMenu/IconsMenu";
-import "./Style/style.css";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setSideMenuOpen } from "../../features/modalsSlice/modalsSlice";
+import "./Style/style.css";
 
 export default function Home() {
   // const [openMenu, setOpenMenu] = useState(false);
@@ -79,8 +79,12 @@ export default function Home() {
     <div className="home-container">
       <WebSocket />
       <div className="top-menu">
-        <div className="icon" onClick={handleMenuClick}>
-          <MenuRoundedIcon className="icon-item" id="menu-icon" />
+        <div data-test="side-menu" className="icon" onClick={handleMenuClick}>
+          <MenuRoundedIcon
+            className="icon-item"
+            data-test="menu-icon"
+            id="menu-icon"
+          />
           <CloseRoundedIcon className="icon-item" id="close-icon" />
         </div>
         <IconsMenu />

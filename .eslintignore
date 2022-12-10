@@ -5,4 +5,5 @@ dist/
 .eslintrc
 cypress.config.ts
 vite.config.ts
+tsconfig.json
 env.d.ts

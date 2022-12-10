@@ -111,6 +111,7 @@ export default function WebSocket() {
 
   return (
     <div
+      data-test="web-socket-banner"
       className={`snack-container ${
         // "error"
         socketStatus !== ReadyState.OPEN ? "error" : "opened"

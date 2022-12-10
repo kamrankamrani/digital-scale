@@ -45,6 +45,11 @@
   transform: scale(0);
 }
 
+.change-item.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 #change-item.show-change-item {
   transform: scale(1);
 }
@@ -52,10 +57,6 @@
 .image-wrapper .change-item p {
   padding: 0;
   margin: 0;
-}
-
-.image-wrapper .change-item:active {
-  background-color: #4984a8;
 }
 
 @media (max-width: 900px) {

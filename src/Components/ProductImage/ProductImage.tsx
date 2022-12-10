@@ -16,6 +16,9 @@ export default function ProductImage() {
   const loadingState = useAppSelector(
     (state) => state.pageRenderSlice.loadingState
   );
+  const disableAlterButton = useAppSelector(
+    (state) => state.pageRenderSlice.disableAlterButton
+  );
   // const mockImageUrl = "https://picsum.photos/id/237/1000/1000";
 
   useEffect(() => {
@@ -58,18 +61,10 @@ export default function ProductImage() {
     }
   }, [imageUrl]);
 
-  useEffect(() => {
-    // if (imageEl) {
-    //   if (loadingState) {
-    //     imageEl.style.backgroundImage = `none`;
-    //   } else {
-    //     imageEl.style.backgroundImage = `url("")`;
-    //     imageEl.style.backgroundColor = "#cfcfcf";
-    //   }
-    // }
-  }, [loadingState]);
-
   const handleChangeItemClick = () => {
+    if (disableAlterButton) {
+      return;
+    }
     setShowModal(!showModal);
   };
 
@@ -77,7 +72,9 @@ export default function ProductImage() {
     <div className="image-container">
       <div id="product-image" className="image-wrapper">
         <div
-          className={`change-item ${changeItem ? "show-change-item" : ""}`}
+          className={`change-item ${changeItem ? "show-change-item" : ""} ${
+            disableAlterButton ? "disabled" : ""
+          }`}
           id="change-item"
           role={"button"}
           onClick={handleChangeItemClick}
