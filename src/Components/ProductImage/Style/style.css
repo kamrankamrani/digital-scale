@@ -1,14 +1,15 @@
 .image-container {
   width: 45%;
   height: 80%;
-  background-color: #dfdfdf;
+  background-color: #f8f8f8;
   border-radius: 20px;
-  padding: 0px 20px;
+  padding: 0;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .image-wrapper {
@@ -57,6 +58,33 @@
 .image-wrapper .change-item p {
   padding: 0;
   margin: 0;
+}
+
+.product-image {
+  width: calc(100% - 10px);
+  max-height: calc(100% - 10px);
+  /* padding: 10px; */
+  border-radius: 15px;
+  object-fit: contain;
+}
+
+.default-image {
+  background-color: inherit;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.default-image img {
+  height: 150px;
+  width: auto;
+  filter: grayscale(1) opacity(0.55);
+}
+
+.default-image svg {
+  color: #7c7676;
 }
 
 @media (max-width: 900px) {

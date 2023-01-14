@@ -5,6 +5,7 @@ import { useAppSelector } from "../../hooks";
 import CachedRoundedIcon from "@mui/icons-material/CachedRounded";
 import Modal from "../Modal/Modal";
 import Loading from "../Loading/Loading";
+import defaultImage from "../../assets/watermelon.svg";
 import "./Style/style.css";
 
 export default function ProductImage() {
@@ -19,7 +20,9 @@ export default function ProductImage() {
   const disableAlterButton = useAppSelector(
     (state) => state.pageRenderSlice.disableAlterButton
   );
-  // const mockImageUrl = "https://picsum.photos/id/237/1000/1000";
+  const mockImageUrl = "";
+
+  //https://picsum.photos/id/237/1000/1000
 
   useEffect(() => {
     const el_ = document.querySelector("#product-image") as HTMLDivElement;
@@ -40,6 +43,7 @@ export default function ProductImage() {
     let el_: HTMLDivElement | null = null;
     if (imageEl === null) {
       el_ = document.querySelector("#product-image") as HTMLDivElement;
+      if (!el_) return;
       setImageEl(el_);
       if (imageUrl) {
         el_.style.backgroundImage = `url("${imageUrl}")`;
@@ -70,8 +74,23 @@ export default function ProductImage() {
 
   return (
     <div className="image-container">
-      <div id="product-image" className="image-wrapper">
-        <div
+      {mockImageUrl ? (
+        <img alt="vms-product" src={mockImageUrl} className="product-image" />
+      ) : (
+        <div className="default-image">
+          <img src={defaultImage} alt="default" />
+        </div>
+      )}
+      {/* <div id="product-image" className="image-wrapper">
+        {loadingState && <Loading />}
+      </div> */}
+      {showModal && <Modal showModal={showModal} setShowModal={setShowModal} />}
+    </div>
+  );
+}
+
+{
+  /* <div
           className={`change-item ${changeItem ? "show-change-item" : ""} ${
             disableAlterButton ? "disabled" : ""
           }`}
@@ -81,10 +100,5 @@ export default function ProductImage() {
         >
           <p>تغییر محصول</p>
           <CachedRoundedIcon fontSize="small" />
-        </div>
-        {loadingState && <Loading />}
-      </div>
-      {showModal && <Modal showModal={showModal} setShowModal={setShowModal} />}
-    </div>
-  );
+        </div> */
 }

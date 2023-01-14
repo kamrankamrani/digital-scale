@@ -12,7 +12,6 @@ import { setSideMenuOpen } from "../../features/modalsSlice/modalsSlice";
 import "./Style/style.css";
 
 export default function Home() {
-  // const [openMenu, setOpenMenu] = useState(false);
   const openSideMenu = useAppSelector(
     (state) => state.modalSlice.isSideMenuOpen
   );
