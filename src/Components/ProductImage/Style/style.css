@@ -12,57 +12,9 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.image-wrapper {
-  padding: 20px 0px;
-  height: 80%;
-  width: 100%;
-  /* background-image: url("../../../assets/lemon.jpg"); */
-  background-color: #cfcfcf;
-  background-size: 60%;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 5px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image-wrapper .change-item {
-  cursor: pointer;
-  position: absolute;
-  bottom: 5px;
-  left: 10px;
-  font-size: small;
-  background-color: #3d7090;
-  padding: 5px 10px;
-  color: #fcfcfc;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  column-gap: 5px;
-  transition: all 200ms cubic-bezier(0.075, 0.82, 0.165, 1);
-  transform-origin: center;
-  transform: scale(0);
-}
-
-.change-item.disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-#change-item.show-change-item {
-  transform: scale(1);
-}
-
-.image-wrapper .change-item p {
-  padding: 0;
-  margin: 0;
-}
-
 .product-image {
-  width: calc(100% - 10px);
-  max-height: calc(100% - 10px);
+  width: calc(100% - 15px);
+  max-height: calc(100% - 15px);
   /* padding: 10px; */
   border-radius: 15px;
   object-fit: contain;
@@ -81,10 +33,7 @@
   height: 150px;
   width: auto;
   filter: grayscale(1) opacity(0.55);
-}
-
-.default-image svg {
-  color: #7c7676;
+  border-radius: 15px;
 }
 
 @media (max-width: 900px) {

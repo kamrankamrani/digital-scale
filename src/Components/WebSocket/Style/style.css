@@ -1,7 +1,7 @@
 .snack-container {
   position: absolute;
-  padding: 0px 10px;
-  border-radius: 10px;
+  padding: 0px 5px;
+  border-radius: 5px;
   background-color: #ed4337;
   bottom: -80px;
   z-index: 5;
@@ -10,6 +10,7 @@
 .snack-container p {
   direction: rtl;
   color: #f9f9f9;
+  font-size: 0.9em;
 }
 
 .snack-container.error {
@@ -38,7 +39,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (min-width: 900px) {
   .snack-container {
     top: 10px;
     height: fit-content;

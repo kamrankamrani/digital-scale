@@ -7,11 +7,11 @@ import {
 } from "../../features/webSocketSlice/webSocketSlice";
 import { ScaleResponseType, wsSendMessageType } from "../../Services/Types";
 import { setScaleResponse } from "../../features/ProductSlice/ProductSlice";
-import "./Style/style.css";
 import {
   setDisableBuyButtonState,
   setPageLoadingState,
 } from "../../features/pageRenderSlice/pageRenderSlice";
+import "./Style/style.css";
 
 export default function WebSocket() {
   const socketUrl = useAppSelector((state) => state.webSocket.socketUrl);
