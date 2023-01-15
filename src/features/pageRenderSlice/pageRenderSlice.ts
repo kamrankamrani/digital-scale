@@ -6,6 +6,7 @@ const initialState: pageRenderSliceType = {
   disableAlterButton: true,
   disableBuyButton: true,
   loadingState: false,
+  searchModalOpen: false,
 };
 
 const pageRenderSlice = createSlice({
@@ -21,6 +22,9 @@ const pageRenderSlice = createSlice({
     setPageLoadingState(state, action: PayloadAction<boolean>) {
       state.loadingState = action.payload;
     },
+    setSearchModalOpen(state, action: PayloadAction<boolean>) {
+      state.searchModalOpen = action.payload;
+    },
   },
 });
 
@@ -28,5 +32,6 @@ export const {
   setDisableBuyButtonState,
   setDisableAlterButtonState,
   setPageLoadingState,
+  setSearchModalOpen,
 } = pageRenderSlice.actions;
 export default pageRenderSlice.reducer;

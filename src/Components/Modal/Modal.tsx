@@ -1,12 +1,11 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { ModalProps } from "../../Services/Types";
 import ModalBody from "../ModalBody/ModalBody";
 import "./Style/style.css";
 
 const modalRoot = document.getElementById("modal");
 
-export default function Modal(props: ModalProps) {
+export default function Modal() {
   const elRef = useRef<HTMLDivElement | null>(null);
   if (!elRef.current) {
     elRef.current = document.createElement("div");
@@ -24,7 +23,7 @@ export default function Modal(props: ModalProps) {
 
   return createPortal(
     <div className="modal-container">
-      <ModalBody {...props} />
+      <ModalBody />
     </div>,
     elRef.current
   );

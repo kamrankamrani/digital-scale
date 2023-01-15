@@ -8,8 +8,10 @@ export interface ScaleResponseType {
   title: string;
   isImage: boolean;
   message: string;
-  alt_images: {
+  alt_items: {
+    id: number;
     url: string;
+    title: string;
   }[];
 }
 
@@ -27,13 +29,9 @@ export interface WebSocketType {
   wsSendMessage: wsSendMessageType;
 }
 
-export interface ModalProps {
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 export interface pageRenderSliceType {
   disableBuyButton: boolean;
   disableAlterButton: boolean;
   loadingState: boolean;
+  searchModalOpen: boolean;
 }

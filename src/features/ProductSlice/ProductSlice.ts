@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { ScaleResponseType } from "../../Services/Types";
 
 const initialState: ScaleResponseType = {
-  url: "",
+  url: "a",
   raw_price: 0,
   off: 0,
   final_price: 0,
@@ -12,7 +12,7 @@ const initialState: ScaleResponseType = {
   title: "",
   isImage: false,
   message: "",
-  alt_images: [{ url: "" }],
+  alt_items: [],
 };
 
 const ProductSlice = createSlice({
@@ -28,8 +28,14 @@ const ProductSlice = createSlice({
       state.weight = action.payload.weight;
       state.isImage = action.payload.isImage;
     },
+    setAlterItems(
+      state,
+      action: PayloadAction<ScaleResponseType["alt_items"]>
+    ) {
+      state.alt_items = action.payload;
+    },
   },
 });
 
-export const { setScaleResponse } = ProductSlice.actions;
+export const { setScaleResponse, setAlterItems } = ProductSlice.actions;
 export default ProductSlice.reducer;

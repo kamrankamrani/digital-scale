@@ -3,11 +3,13 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import Modal from "../Modal/Modal";
 import Loading from "../Loading/Loading";
 import defaultImage from "../../assets/watermelon.svg";
-import "./Style/style.css";
 import { setDisableAlterButtonState } from "../../features/pageRenderSlice/pageRenderSlice";
+import "./Style/style.css";
 
 export default function ProductImage() {
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const showModal = useAppSelector(
+    (state) => state.pageRenderSlice.searchModalOpen
+  );
   const imageUrl: string = useAppSelector((state) => state.product.url);
   const loadingState = useAppSelector(
     (state) => state.pageRenderSlice.loadingState
@@ -33,7 +35,7 @@ export default function ProductImage() {
           <img src={defaultImage} alt="default" />
         </div>
       )}
-      {showModal && <Modal showModal={showModal} setShowModal={setShowModal} />}
+      {showModal && <Modal />}
     </div>
   );
 }

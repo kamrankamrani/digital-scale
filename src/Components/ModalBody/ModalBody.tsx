@@ -1,36 +1,59 @@
-import { ModalProps } from "../../Services/Types";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { setSearchModalOpen } from "../../features/pageRenderSlice/pageRenderSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import defaultImage from "../../assets/watermelon.svg";
 import "./Style/style.css";
-import { useAppSelector } from "../../hooks";
+import useSearchItems from "../CustomHooks/useSearchItems";
+import { useEffect, useState } from "react";
 
-export default function ModalBody(props: ModalProps) {
-  const imagesArr = useAppSelector((state) => state.product.alt_images);
-  const mockImageUrl = "/src/assets/lemon.jpg";
+export default function ModalBody() {
+  const imagesArr = useAppSelector((state) => state.product.alt_items);
+  // const mockImageUrl = "/src/assets/lemon.jpg";
+  const [searchValue, setSearchValue] = useState<string>("");
+  const altimgs_ = useSearchItems(searchValue);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    console.log("data got! -> ", altimgs_);
+  }, [altimgs_]);
 
   const onModalClose = () => {
     const el_ = document.querySelector(".modal-body");
     if (!el_) return;
     el_.classList.add("hide-modal");
     setTimeout(() => {
-      props.setShowModal(false);
+      dispatch(setSearchModalOpen(false));
     }, 500);
   };
+
+  const handleSearchItems = (value: string) => {
+    // useSearchItems(value);
+    setSearchValue(value);
+  };
+
   return (
     <div className="modal-body">
       <div className="icon-container">
         <CloseRoundedIcon onClick={onModalClose} fontSize="large" />
       </div>
+      <div className="input-container">
+        <input
+          type="text"
+          value={searchValue}
+          onChange={(e) => handleSearchItems(e.target.value)}
+        />
+      </div>
       {imagesArr.map((value, index) => {
         return (
           <>
-            <div key={index} className="item">
+            <div key={value.id} className="item">
               <div>
-                <p>لیمو سنگی</p>
+                <p>{value.title}</p>
               </div>
-              <div>
+              <div className="item-image-container">
                 <img
                   className="image"
-                  src={mockImageUrl}
+                  src={value.url.length ? value.url : defaultImage}
                   alt={`img-${index}`}
                 />
               </div>

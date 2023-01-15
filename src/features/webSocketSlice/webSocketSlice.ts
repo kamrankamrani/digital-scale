@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { WebSocketType, wsSendMessageType } from "../../Services/Types";
 
 const initialState: WebSocketType = {
-  socketUrl: "ws://localhost:4000",
+  socketUrl: "ws://192.168.1.6:4000",
   connectionStatus: -1,
   wsSendMessage: {
     isMessage: false,
