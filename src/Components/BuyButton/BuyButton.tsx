@@ -13,11 +13,10 @@ export default function BuyButton() {
     const msg: wsSendMessageType = {
       body: {
         client: "UI",
-        message: "complete",
+        message: "print",
       },
       isMessage: true,
     };
-
     dispatch(setWsSendMessage(msg));
   };
 

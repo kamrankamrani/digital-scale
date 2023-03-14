@@ -45,7 +45,7 @@ export default function WebSocket() {
 
   function handleSocketMessage(message: MessageEvent) {
     const parsedJson: ScaleResponseType = JSON.parse(message.data);
-    console.log("core message is", parsedJson);
+    // console.log("core message is", parsedJson);
     dispatch(setPageLoadingState(false)); //new message = loading false
     dispatch(setDisableBuyButtonState(true));
 
@@ -55,7 +55,7 @@ export default function WebSocket() {
     }
 
     if (!parsedJson.message) {
-      console.log("data format error! not message included", parsedJson);
+      // console.log("data format error! not message included", parsedJson);
       return;
     }
 
@@ -97,6 +97,7 @@ export default function WebSocket() {
 
   useEffect(() => {
     if (sendWsMessage.isMessage) {
+      console.log("sending message", sendWsMessage.body);
       sendMessage(JSON.stringify(sendWsMessage.body));
       const defaultVal_: wsSendMessageType = {
         isMessage: false,
