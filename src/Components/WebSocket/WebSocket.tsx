@@ -40,7 +40,7 @@ export default function WebSocket() {
     share: true,
     retryOnError: true,
     reconnectInterval: 3000,
-    reconnectAttempts: 1000, //3s * 1000 = 3000s or 50 minutes
+    reconnectAttempts: 10000, //3s * 10000 = 3000s or 500 minutes
   });
 
   function handleSocketMessage(message: MessageEvent) {
