@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { ScaleResponseType } from "../../Services/Types";
 
 const initialState: ScaleResponseType = {
-  url: "a",
+  url: "",
   raw_price: 0,
   off: 0,
   final_price: 0,

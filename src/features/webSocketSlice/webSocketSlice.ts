@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { WebSocketType, wsSendMessageType } from "../../Services/Types";
+import { WEBSOCKET_IP_ADDRESS } from "../../Services/Consts";
 
 const initialState: WebSocketType = {
-  socketUrl: "ws://192.168.1.6:4000",
+  socketUrl: WEBSOCKET_IP_ADDRESS,
   connectionStatus: -1,
   wsSendMessage: {
     isMessage: false,

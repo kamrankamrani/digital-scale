@@ -55,7 +55,7 @@ export default function WebSocket() {
     }
 
     if (!parsedJson.message) {
-      console.log("data format error!", parsedJson);
+      console.log("data format error! not message included", parsedJson);
       return;
     }
 
@@ -69,8 +69,8 @@ export default function WebSocket() {
         title: "",
         weight: 0,
         isImage: false,
-        alt_images: [],
         message: "",
+        alt_items: [],
       };
       dispatch(setScaleResponse(data_));
     } else if (parsedJson.message === "weight") {
