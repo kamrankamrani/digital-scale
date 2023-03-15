@@ -39,18 +39,16 @@ export default function WebSocket() {
     },
     share: true,
     retryOnError: true,
-    reconnectInterval: 3000,
+    reconnectInterval: 5000,
     reconnectAttempts: 10000, //3s * 10000 = 3000s or 500 minutes
   });
 
   function handleSocketMessage(message: MessageEvent) {
     const parsedJson: ScaleResponseType = JSON.parse(message.data);
     // console.log("core message is", parsedJson);
-    dispatch(setPageLoadingState(false)); //new message = loading false
-    dispatch(setDisableBuyButtonState(true));
 
-    if (parsedJson.client === "UI") {
-      // it is echo message
+    if (parsedJson.client === "scale") {
+      // it is not for me
       return;
     }
 
@@ -59,7 +57,11 @@ export default function WebSocket() {
       return;
     }
 
+    dispatch(setPageLoadingState(false)); //new message = loading false
+    dispatch(setDisableBuyButtonState(true));
+
     if (parsedJson.message === "default") {
+      console.log("default state");
       const data_: ScaleResponseType = {
         url: "",
         client: "",
@@ -74,6 +76,7 @@ export default function WebSocket() {
       };
       dispatch(setScaleResponse(data_));
     } else if (parsedJson.message === "weight") {
+      console.log("weight state");
       dispatch(setScaleResponse(parsedJson));
       dispatch(setDisableBuyButtonState(false));
     } else if (parsedJson.message === "loading") {
