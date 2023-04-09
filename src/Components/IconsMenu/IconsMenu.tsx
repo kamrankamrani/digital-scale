@@ -6,6 +6,7 @@ import { useAppDispatch } from "../../hooks";
 import { setSideMenuOpen } from "../../features/modalsSlice/modalsSlice";
 import { wsSendMessageType } from "../../Services/Types";
 import { setWsSendMessage } from "../../features/webSocketSlice/webSocketSlice";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import "./Style/style.css";
 
 export default function IconsMenu() {
@@ -25,7 +26,7 @@ export default function IconsMenu() {
   };
 
   const reloadClick = () => {
-    // location.reload();
+    location.reload();
     dispatch(setSideMenuOpen(false));
   };
 
@@ -38,6 +39,10 @@ export default function IconsMenu() {
       <div className="menu-item" onClick={() => reloadClick()}>
         <p>بارگزاری مجدد</p>
         <ReplayRoundedIcon fontSize="small" />
+      </div>
+      <div className="menu-item" onClick={() => window.close()}>
+        <p>خروج از برنامه</p>
+        <ExitToAppIcon fontSize="small" />
       </div>
     </div>
   );
