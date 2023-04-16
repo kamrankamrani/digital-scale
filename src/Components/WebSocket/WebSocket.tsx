@@ -9,6 +9,7 @@ import { ScaleResponseType, wsSendMessageType } from "../../Services/Types";
 import { setScaleResponse } from "../../features/ProductSlice/ProductSlice";
 import {
   setDisableBuyButtonState,
+  setLoadingBuyButton,
   setPageLoadingState,
 } from "../../features/pageRenderSlice/pageRenderSlice";
 import "./Style/style.css";
@@ -74,14 +75,19 @@ export default function WebSocket() {
         message: "",
         alt_items: [],
       };
+      setLoadingBuyButton(false); //loading buy button
       dispatch(setScaleResponse(data_));
     } else if (parsedJson.message === "weight") {
       console.log("weight state", parsedJson);
       dispatch(setScaleResponse(parsedJson));
       dispatch(setDisableBuyButtonState(false));
+      setLoadingBuyButton(false); //loading buy button
     } else if (parsedJson.message === "loading") {
       //start loading
       dispatch(setPageLoadingState(true));
+      setLoadingBuyButton(false); //loading buy button
+    } else if (parsedJson.message === "printing") {
+      setTimeout(() => dispatch(setLoadingBuyButton(false)));
     }
   }
 

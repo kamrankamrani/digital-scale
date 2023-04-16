@@ -4,17 +4,19 @@ import { wsSendMessageType } from "../../Services/Types";
 import { useState } from "react";
 import ButtonLoadingLayout from "./ButtonLoadingLayout";
 import "./Style/style.css";
+import { setLoadingBuyButton } from "../../features/pageRenderSlice/pageRenderSlice";
 
 export default function BuyButton() {
-  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const disableButon = useAppSelector(
     (state) => state.pageRenderSlice.disableBuyButton
+  );
+  const loadingButtonState = useAppSelector(
+    (state) => state.pageRenderSlice.loadingBuyButton
   );
   const dispatch = useAppDispatch();
 
   const handleButtonClick = () => {
-    setIsButtonLoading(true);
-    setTimeout(() => setIsButtonLoading(false), 3000);
+    dispatch(setLoadingBuyButton(true));
     const msg: wsSendMessageType = {
       body: {
         client: "UI",
@@ -34,7 +36,7 @@ export default function BuyButton() {
         onClick={handleButtonClick}
       >
         چاپ
-        {isButtonLoading && <ButtonLoadingLayout />}
+        {loadingButtonState && <ButtonLoadingLayout />}
       </button>
     </div>
   );

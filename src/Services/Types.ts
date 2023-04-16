@@ -34,4 +34,5 @@ export interface pageRenderSliceType {
   disableAlterButton: boolean;
   loadingState: boolean;
   searchModalOpen: boolean;
+  loadingBuyButton: boolean;
 }
