@@ -94,7 +94,7 @@ export default function Home() {
         <ProductImage />
         <ProductData />
       </div>
-      <ChangeItemButton />
+      {/* <ChangeItemButton /> */}
     </div>
   );
 }

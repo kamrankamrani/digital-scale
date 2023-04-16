@@ -1,15 +1,20 @@
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setWsSendMessage } from "../../features/webSocketSlice/webSocketSlice";
 import { wsSendMessageType } from "../../Services/Types";
+import { useState } from "react";
+import ButtonLoadingLayout from "./ButtonLoadingLayout";
 import "./Style/style.css";
 
 export default function BuyButton() {
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const disableButon = useAppSelector(
     (state) => state.pageRenderSlice.disableBuyButton
   );
   const dispatch = useAppDispatch();
 
   const handleButtonClick = () => {
+    setIsButtonLoading(true);
+    setTimeout(() => setIsButtonLoading(false), 3000);
     const msg: wsSendMessageType = {
       body: {
         client: "UI",
@@ -28,7 +33,8 @@ export default function BuyButton() {
         className={`button ${disableButon ? "disable" : ""}`}
         onClick={handleButtonClick}
       >
-        تایید و چاپ برچسب
+        چاپ
+        {isButtonLoading && <ButtonLoadingLayout />}
       </button>
     </div>
   );
