@@ -5,7 +5,7 @@ import { pageRenderSliceType } from "../../Services/Types";
 const initialState: pageRenderSliceType = {
   disableAlterButton: true,
   disableBuyButton: true,
-  loadingState: false,
+  loadingState: true,
   searchModalOpen: false,
 };
 

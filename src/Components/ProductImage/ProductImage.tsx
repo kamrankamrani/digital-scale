@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Modal from "../Modal/Modal";
 import Loading from "../Loading/Loading";
@@ -33,6 +33,7 @@ export default function ProductImage() {
       ) : (
         <div className="default-image">
           <img src={defaultImage} alt="default" />
+          {loadingState && <Loading />}
         </div>
       )}
       {showModal && <Modal />}

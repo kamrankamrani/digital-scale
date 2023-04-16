@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setSideMenuOpen } from "../../features/modalsSlice/modalsSlice";
 import "./Style/style.css";
 import ChangeItemButton from "../ChangeItemButton/ChangeItemButton";
+import Loading from "../Loading/Loading";
 
 export default function Home() {
   const openSideMenu = useAppSelector(
