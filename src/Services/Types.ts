@@ -38,7 +38,7 @@ export interface pageRenderSliceType {
 }
 
 export interface RequestApiType {
-  weight: string;
-  image_address: string;
+  // weight: string;
+  // image_address: string;
   url: string;
 }
