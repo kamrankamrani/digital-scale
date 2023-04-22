@@ -1,5 +1,5 @@
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   setWebSocketStatus,
@@ -23,6 +23,21 @@ export default function WebSocket() {
   const sendWsMessage = useAppSelector(
     (state) => state.webSocket.wsSendMessage
   );
+
+  const DEFAULT_PRODUCT_DATA: ScaleResponseType = useMemo(() => {
+    return {
+      url: "",
+      client: "",
+      final_price: 0,
+      off: 0,
+      raw_price: 0,
+      title: "",
+      weight: 0,
+      isImage: false,
+      message: "",
+      alt_items: [],
+    };
+  }, []);
 
   const { readyState, sendMessage } = useWebSocket(socketUrl, {
     onMessage(event: WebSocketEventMap["message"]) {
@@ -60,45 +75,36 @@ export default function WebSocket() {
 
     dispatch(setPageLoadingState(false)); //new message = loading false
     dispatch(setDisableBuyButtonState(true));
+    // setLoadingBuyButton(false); //loading buy button for print = false
 
     if (parsedJson.message === "default") {
       console.log("default state");
-      const data_: ScaleResponseType = {
-        url: "",
-        client: "",
-        final_price: 0,
-        off: 0,
-        raw_price: 0,
-        title: "",
-        weight: 0,
-        isImage: false,
-        message: "",
-        alt_items: [],
-      };
-      setLoadingBuyButton(false); //loading buy button
-      dispatch(setScaleResponse(data_));
+      // const data_: ScaleResponseType = {
+      //   url: "",
+      //   client: "",
+      //   final_price: 0,
+      //   off: 0,
+      //   raw_price: 0,
+      //   title: "",
+      //   weight: 0,
+      //   isImage: false,
+      //   message: "",
+      //   alt_items: [],
+      // };
+
+      dispatch(setScaleResponse(DEFAULT_PRODUCT_DATA));
     } else if (parsedJson.message === "weight") {
       console.log("weight state", parsedJson);
       dispatch(setScaleResponse(parsedJson));
       dispatch(setDisableBuyButtonState(false));
-      setLoadingBuyButton(false); //loading buy button
     } else if (parsedJson.message === "loading") {
       //start loading
       dispatch(setPageLoadingState(true));
-      setLoadingBuyButton(false); //loading buy button
+      setLoadingBuyButton(false); //loading buy button for print = = false
     } else if (parsedJson.message === "printing") {
-      setTimeout(() => dispatch(setLoadingBuyButton(false)));
+      setLoadingBuyButton(false); //loading buy button for print = false
     }
   }
-
-  //TODO: delete
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: "Connecting",
-    [ReadyState.OPEN]: "Open",
-    [ReadyState.CLOSING]: "Closing",
-    [ReadyState.CLOSED]: "Closed",
-    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
-  }[readyState];
 
   useEffect(() => {
     dispatch(setWebSocketStatus(readyState));
