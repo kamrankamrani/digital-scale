@@ -36,3 +36,9 @@ export interface pageRenderSliceType {
   searchModalOpen: boolean;
   loadingBuyButton: boolean;
 }
+
+export interface RequestApiType {
+  weight: string;
+  image_address: string;
+  url: string;
+}
