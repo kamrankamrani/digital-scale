@@ -7,12 +7,34 @@ import { setSideMenuOpen } from "../../features/modalsSlice/modalsSlice";
 import { RequestApiType, wsSendMessageType } from "../../Services/Types";
 import { setWsSendMessage } from "../../features/webSocketSlice/webSocketSlice";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import "./Style/style.css";
 import { RequestApi } from "../../Services/RequestApi";
-import { RPI_TARE_API } from "../../Services/Consts";
+import { RPI_SEND_IMAGE, RPI_TARE_API } from "../../Services/Consts";
+import { useEffect } from "react";
+import "./Style/style.css";
+import axios from "axios";
 
 export default function IconsMenu() {
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    RequestApi({
+      url: "https://i.ibb.co/80x9Z8G/0165.jpg",
+    }).then((res: any) => {
+      const blob = new Blob([res.data], { type: "image/jpeg" });
+      // console.log(URL.createObjectURL(blob));
+      const file = new File([blob], "image.jpg", { type: blob.type });
+      console.log(file);
+
+      const fd = new FormData();
+      fd.append("data", file);
+
+      const url = RPI_SEND_IMAGE;
+      axios
+        .post(url, fd, { headers: { "Content-Type": "multipart/form-data" } })
+        .then((res) => console.log("axios res ", res))
+        .catch((e) => console.log("axios error", e));
+    });
+  }, []);
 
   const handleTareClick = () => {
     // const msg: wsSendMessageType = {
