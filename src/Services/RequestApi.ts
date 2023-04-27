@@ -7,11 +7,11 @@ export function RequestApi(props: RequestApiType) {
     axios
       .get(props.url)
       .then((res) => {
-        // console.log("get req res => ", res);
+        console.log("get req res => ", res);
         resolve(res);
       })
       .catch((err) => {
-        // console.log("get req error => ", err);
+        console.log("get req error => ", err);
         reject(err);
       });
   });
