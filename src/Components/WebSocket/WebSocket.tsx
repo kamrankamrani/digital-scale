@@ -125,20 +125,20 @@ export default function WebSocket() {
     dispatch(setWebSocketStatus(readyState));
   }, [readyState]);
 
-  useEffect(() => {
-    if (sendWsMessage.isMessage) {
-      console.log("sending message", sendWsMessage.body);
-      sendMessage(JSON.stringify(sendWsMessage.body));
-      const defaultVal_: wsSendMessageType = {
-        isMessage: false,
-        body: {
-          client: "",
-          message: "",
-        },
-      };
-      dispatch(setWsSendMessage(defaultVal_));
-    }
-  }, [sendWsMessage.isMessage]);
+  // useEffect(() => {
+  //   if (sendWsMessage.isMessage) {
+  //     console.log("sending message", sendWsMessage.body);
+  //     sendMessage(JSON.stringify(sendWsMessage.body));
+  //     const defaultVal_: wsSendMessageType = {
+  //       isMessage: false,
+  //       body: {
+  //         client: "",
+  //         message: "",
+  //       },
+  //     };
+  //     dispatch(setWsSendMessage(defaultVal_));
+  //   }
+  // }, [sendWsMessage.isMessage]);
 
   return (
     <div
