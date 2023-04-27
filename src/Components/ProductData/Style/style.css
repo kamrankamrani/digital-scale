@@ -9,6 +9,8 @@
   flex-direction: column;
   /* justify-content: space-between; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  row-gap: 1.5rem;
+  /* padding-top: 1rem; */
 }
 
 @media (max-width: 900px) {

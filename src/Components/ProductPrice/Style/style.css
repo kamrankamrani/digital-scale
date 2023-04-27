@@ -3,6 +3,11 @@
   color: #212121;
   justify-content: space-around;
   align-items: center;
+  row-gap: 1rem;
+}
+
+.text-container p {
+  margin: 0;
 }
 
 .text-container .price {

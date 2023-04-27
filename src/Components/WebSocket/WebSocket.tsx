@@ -5,14 +5,22 @@ import {
   setWebSocketStatus,
   setWsSendMessage,
 } from "../../features/webSocketSlice/webSocketSlice";
-import { ScaleResponseType, wsSendMessageType } from "../../Services/Types";
-import { setScaleResponse } from "../../features/ProductSlice/ProductSlice";
+import {
+  ProductDataType,
+  ProductDataTypeWithWeight,
+  RPIWebsocketMessage,
+  wsSendMessageType,
+} from "../../Services/Types";
+import { setProductResponse } from "../../features/ProductSlice/ProductSlice";
 import {
   setDisableBuyButtonState,
   setLoadingBuyButton,
   setPageLoadingState,
 } from "../../features/pageRenderSlice/pageRenderSlice";
 import "./Style/style.css";
+import { FetchImageRequest } from "../../Services/FetchRequest";
+import axios from "axios";
+import { STORE_API_ADRESS } from "../../Services/Consts";
 
 export default function WebSocket() {
   const socketUrl = useAppSelector((state) => state.webSocket.socketUrl);
@@ -23,19 +31,19 @@ export default function WebSocket() {
   const sendWsMessage = useAppSelector(
     (state) => state.webSocket.wsSendMessage
   );
+  const imageUrl = "http://localhost:5173/image.jpg";
 
-  const DEFAULT_PRODUCT_DATA: ScaleResponseType = useMemo(() => {
+  const DEFAULT_PRODUCT_DATA: ProductDataTypeWithWeight = useMemo(() => {
     return {
       url: "",
-      client: "",
-      final_price: 0,
-      off: 0,
-      raw_price: 0,
+      price: "",
+      final_price: "",
+      category: "",
+      off: "",
+      vms: "",
+      barcode: "",
       title: "",
-      weight: 0,
-      isImage: false,
-      message: "",
-      alt_items: [],
+      weight: "",
     };
   }, []);
 
@@ -60,7 +68,7 @@ export default function WebSocket() {
   });
 
   function handleSocketMessage(message: MessageEvent) {
-    const parsedJson: ScaleResponseType = JSON.parse(message.data);
+    const parsedJson: RPIWebsocketMessage = JSON.parse(message.data);
     // console.log("core message is", parsedJson);
 
     if (parsedJson.client === "scale") {
@@ -68,7 +76,7 @@ export default function WebSocket() {
       return;
     }
 
-    if (!parsedJson.message) {
+    if (!parsedJson.message_type) {
       // console.log("data format error! not message included", parsedJson);
       return;
     }
@@ -77,31 +85,38 @@ export default function WebSocket() {
     dispatch(setDisableBuyButtonState(true));
     // setLoadingBuyButton(false); //loading buy button for print = false
 
-    if (parsedJson.message === "default") {
+    if (parsedJson.message_type === "default") {
       console.log("default state");
-      // const data_: ScaleResponseType = {
-      //   url: "",
-      //   client: "",
-      //   final_price: 0,
-      //   off: 0,
-      //   raw_price: 0,
-      //   title: "",
-      //   weight: 0,
-      //   isImage: false,
-      //   message: "",
-      //   alt_items: [],
-      // };
-
-      dispatch(setScaleResponse(DEFAULT_PRODUCT_DATA));
-    } else if (parsedJson.message === "weight") {
+      dispatch(setProductResponse(DEFAULT_PRODUCT_DATA));
+    } else if (parsedJson.message_type === "weight") {
       console.log("weight state", parsedJson);
-      dispatch(setScaleResponse(parsedJson));
+      FetchImageRequest({ url: imageUrl }).then((res: File) => {
+        const formData = new FormData();
+        formData.append("file", res);
+        formData.append("weight", "1200");
+        axios
+          .post<ProductDataType>(STORE_API_ADRESS, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res_) => {
+            console.log("axios res ", res_.data);
+            const data_: ProductDataTypeWithWeight = {
+              ...res_.data,
+              weight: parsedJson.weight,
+            };
+            dispatch(setProductResponse(data_));
+          })
+          .catch((e) => console.log("axios er ", e));
+      });
+      // dispatch(setProductResponse(parsedJson));
       dispatch(setDisableBuyButtonState(false));
-    } else if (parsedJson.message === "loading") {
+    } else if (parsedJson.message_type === "loading") {
       //start loading
       dispatch(setPageLoadingState(true));
       setLoadingBuyButton(false); //loading buy button for print = = false
-    } else if (parsedJson.message === "printing") {
+    } else if (parsedJson.message_type === "printing") {
       setLoadingBuyButton(false); //loading buy button for print = false
     }
   }

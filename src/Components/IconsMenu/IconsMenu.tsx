@@ -85,8 +85,6 @@ export default function IconsMenu() {
 
   const reloadClick = async () => {
     // location.reload();
-    const url = "http://31.47.58.35:5004/tarazo";
-    const imageUrl = "http://localhost:5173/image.jpg";
 
     // const url = RPI_SEND_IMAGE;
     // const imageUrl = "http://localhost:5173/image.jpg";
@@ -109,21 +107,6 @@ export default function IconsMenu() {
     //   })
     //   .catch((e) => console.log("axios er ", e));
 
-    FetchImageRequest({ url: imageUrl }).then((res: File) => {
-      const formData = new FormData();
-      formData.append("file", res);
-      formData.append("weight", "1200");
-      axios
-        .post(url, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res_) => {
-          console.log("axios res ", res_);
-        })
-        .catch((e) => console.log("axios er ", e));
-    });
     dispatch(setSideMenuOpen(false));
   };
 

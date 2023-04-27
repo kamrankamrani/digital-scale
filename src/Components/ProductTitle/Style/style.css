@@ -6,6 +6,10 @@
   padding: 0px 15px;
 }
 
+.text-container.margin-top-one-rem {
+  margin-top: 0.5rem;
+}
+
 .text-container .title {
   font-size: 18px;
 }

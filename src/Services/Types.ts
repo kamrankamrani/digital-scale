@@ -1,18 +1,23 @@
-export interface ScaleResponseType {
+export interface ProductDataType {
   url: string;
-  raw_price: number;
-  off: number;
-  final_price: number;
-  client: string;
-  weight: number;
+  price: string;
+  off: string;
+  final_price: string;
   title: string;
-  isImage: boolean;
-  message: string;
-  alt_items: {
-    id: number;
-    url: string;
-    title: string;
-  }[];
+  vms: string;
+  category: string;
+  barcode: string;
+}
+
+export interface ProductDataTypeWithWeight extends ProductDataType {
+  weight: string;
+}
+
+export interface RPIWebsocketMessage {
+  client: string;
+  message_type: string;
+  weight: string;
+  image_url: string;
 }
 
 export interface wsSendMessageType {
