@@ -1,15 +1,15 @@
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   setWebSocketStatus,
-  setWsSendMessage,
+  // setWsSendMessage,
 } from "../../features/webSocketSlice/webSocketSlice";
 import {
   ProductDataType,
   ProductDataTypeWithWeight,
   RPIWebsocketMessage,
-  wsSendMessageType,
+  // wsSendMessageType,
 } from "../../Services/Types";
 import { setProductResponse } from "../../features/ProductSlice/ProductSlice";
 import {
@@ -20,7 +20,7 @@ import {
 import "./Style/style.css";
 import { FetchImageRequest } from "../../Services/FetchRequest";
 import axios from "axios";
-import { STORE_API_ADRESS, UI_SERVER_ADDRESS } from "../../Services/Consts";
+import { RPI_SEND_IMAGE, UI_SERVER_ADDRESS } from "../../Services/Consts";
 
 export default function WebSocket() {
   const socketUrl = useAppSelector((state) => state.webSocket.socketUrl);
@@ -29,10 +29,11 @@ export default function WebSocket() {
   );
   const dispatch = useAppDispatch();
   const productDataFromRedux = useAppSelector((state) => state.product);
-  const sendWsMessage = useAppSelector(
-    (state) => state.webSocket.wsSendMessage
-  );
-  // const imageUrl = "http://localhost:5173/image.jpg";
+  // const sendWsMessage = useAppSelector(
+  //   (state) => state.webSocket.wsSendMessage
+  // );
+  const imageUrl = "http://localhost:5173/image.jpg";
+  // const imageUrl = `${UI_SERVER_ADDRESS}/${parsedJson.image_url}`;
 
   const DEFAULT_PRODUCT_DATA: ProductDataTypeWithWeight = useMemo(() => {
     return {
@@ -48,7 +49,7 @@ export default function WebSocket() {
     };
   }, []);
 
-  const { readyState, sendMessage } = useWebSocket(socketUrl, {
+  const { readyState /*sendMessage*/ } = useWebSocket(socketUrl, {
     onMessage(event: WebSocketEventMap["message"]) {
       handleSocketMessage(event);
     },
@@ -83,6 +84,7 @@ export default function WebSocket() {
 
     dispatch(setPageLoadingState(false)); //new message = loading false
     dispatch(setDisableBuyButtonState(true));
+    // setLoadingBuyButton(false);
     // setLoadingBuyButton(false); //loading buy button for print = false
 
     if (parsedJson.message_type === "default") {
@@ -96,13 +98,13 @@ export default function WebSocket() {
       };
       dispatch(setProductResponse(instantChangeData));
       FetchImageRequest({
-        url: `${UI_SERVER_ADDRESS}/${parsedJson.image_url}`,
+        url: imageUrl,
       }).then((res: File) => {
         const formData = new FormData();
         formData.append("file", res);
         formData.append("weight", parsedJson.weight);
         axios
-          .post<ProductDataType>(STORE_API_ADRESS, formData, {
+          .post<ProductDataType>(RPI_SEND_IMAGE, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -126,9 +128,9 @@ export default function WebSocket() {
     } else if (parsedJson.message_type === "loading") {
       //start loading
       dispatch(setPageLoadingState(true));
-      setLoadingBuyButton(false); //loading buy button for print = = false
+      // setLoadingBuyButton(false); //loading buy button for print = = false
     } else if (parsedJson.message_type === "printing") {
-      setLoadingBuyButton(false); //loading buy button for print = false
+      // setLoadingBuyButton(false); //loading buy button for print = false
     }
   }
 

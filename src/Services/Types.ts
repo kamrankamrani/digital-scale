@@ -47,3 +47,10 @@ export interface RequestApiType {
   // image_address: string;
   url: string;
 }
+
+export interface SendDataToPrintType extends RequestApiType {
+  weight: string;
+  title: string;
+  final_price: string;
+  barcode: string;
+}
