@@ -32,7 +32,7 @@ export default function WebSocket() {
   // const sendWsMessage = useAppSelector(
   //   (state) => state.webSocket.wsSendMessage
   // );
-  const imageUrl = "http://localhost:5173/image.jpg";
+  // const imageUrl = "http://localhost:5173/image.jpg";
   // const imageUrl = `${UI_SERVER_ADDRESS}/${parsedJson.image_url}`;
 
   const DEFAULT_PRODUCT_DATA: ProductDataTypeWithWeight = useMemo(() => {
@@ -98,7 +98,7 @@ export default function WebSocket() {
       };
       dispatch(setProductResponse(instantChangeData));
       FetchImageRequest({
-        url: imageUrl,
+        url: `${UI_SERVER_ADDRESS}/${parsedJson.image_url}`,
       }).then((res: File) => {
         const formData = new FormData();
         formData.append("file", res);
