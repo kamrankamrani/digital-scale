@@ -11,7 +11,7 @@ export default function ProductPrice() {
     <div className="text-container">
       <p className="price">قیمت برای مصرف کننده : </p>
       <div className="price-container">
-        {productData.off && (
+        {productData.off !== "0" && (
           <div className="off-container">
             <div className="off">
               <p>{PersianNumber(productData.off)}%</p>

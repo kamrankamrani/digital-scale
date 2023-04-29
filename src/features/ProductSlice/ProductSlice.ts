@@ -1,16 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import {
-  ProductDataType,
-  ProductDataTypeWithWeight,
-} from "../../Services/Types";
+import { ProductDataTypeWithWeight } from "../../Services/Types";
 
 const initialState: ProductDataTypeWithWeight = {
   url: "",
   price: "",
-  final_price: "",
+  final_price: "0",
   category: "",
-  off: "",
+  off: "0",
   vms: "",
   barcode: "",
   title: "",
@@ -33,12 +30,10 @@ const ProductSlice = createSlice({
       state.vms = action.payload.vms;
       state.category = action.payload.category;
       state.price = action.payload.price;
-    },
-    setProductWeight(state, action: PayloadAction<string>) {
-      state.weight = action.payload;
+      state.weight = action.payload.weight;
     },
   },
 });
 
-export const { setProductResponse, setProductWeight } = ProductSlice.actions;
+export const { setProductResponse } = ProductSlice.actions;
 export default ProductSlice.reducer;

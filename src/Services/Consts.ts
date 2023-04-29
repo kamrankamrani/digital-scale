@@ -12,3 +12,5 @@ export const RPI_TARE_API = `${WEBSERVER_IP}/tare`;
 
 // export const RPI_SEND_IMAGE = `${WEBSERVER_IP}/upload`;
 export const RPI_SEND_IMAGE = `http://31.47.58.35:5004/tarazo`;
+
+export const UI_SERVER_ADDRESS = "http://localhost/5000";

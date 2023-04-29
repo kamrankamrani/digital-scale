@@ -12,7 +12,7 @@ export default function ProductTitle() {
     <>
       <div className="text-container margin-top-one-rem">
         <p className="title">نام محصول: </p>
-        <p>{productData.title}</p>
+        <p>{decodeURI(productData.title)}</p>
       </div>
       <div className="text-container">
         <p className="weight">وزن : </p>

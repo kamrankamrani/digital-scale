@@ -1,5 +1,5 @@
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   setWebSocketStatus,
@@ -20,7 +20,7 @@ import {
 import "./Style/style.css";
 import { FetchImageRequest } from "../../Services/FetchRequest";
 import axios from "axios";
-import { STORE_API_ADRESS } from "../../Services/Consts";
+import { STORE_API_ADRESS, UI_SERVER_ADDRESS } from "../../Services/Consts";
 
 export default function WebSocket() {
   const socketUrl = useAppSelector((state) => state.webSocket.socketUrl);
@@ -28,18 +28,19 @@ export default function WebSocket() {
     (state) => state.webSocket.connectionStatus
   );
   const dispatch = useAppDispatch();
+  const productDataFromRedux = useAppSelector((state) => state.product);
   const sendWsMessage = useAppSelector(
     (state) => state.webSocket.wsSendMessage
   );
-  const imageUrl = "http://localhost:5173/image.jpg";
+  // const imageUrl = "http://localhost:5173/image.jpg";
 
   const DEFAULT_PRODUCT_DATA: ProductDataTypeWithWeight = useMemo(() => {
     return {
       url: "",
       price: "",
-      final_price: "",
+      final_price: "0",
       category: "",
-      off: "",
+      off: "0",
       vms: "",
       barcode: "",
       title: "",
@@ -69,7 +70,6 @@ export default function WebSocket() {
 
   function handleSocketMessage(message: MessageEvent) {
     const parsedJson: RPIWebsocketMessage = JSON.parse(message.data);
-    // console.log("core message is", parsedJson);
 
     if (parsedJson.client === "scale") {
       // it is not for me
@@ -90,10 +90,17 @@ export default function WebSocket() {
       dispatch(setProductResponse(DEFAULT_PRODUCT_DATA));
     } else if (parsedJson.message_type === "weight") {
       console.log("weight state", parsedJson);
-      FetchImageRequest({ url: imageUrl }).then((res: File) => {
+      const instantChangeData: ProductDataTypeWithWeight = {
+        ...productDataFromRedux,
+        weight: parsedJson.weight,
+      };
+      dispatch(setProductResponse(instantChangeData));
+      FetchImageRequest({
+        url: `${UI_SERVER_ADDRESS}/${parsedJson.image_url}`,
+      }).then((res: File) => {
         const formData = new FormData();
         formData.append("file", res);
-        formData.append("weight", "1200");
+        formData.append("weight", parsedJson.weight);
         axios
           .post<ProductDataType>(STORE_API_ADRESS, formData, {
             headers: {
@@ -102,10 +109,14 @@ export default function WebSocket() {
           })
           .then((res_) => {
             console.log("axios res ", res_.data);
+            console.log("weight =>", parsedJson.weight);
             const data_: ProductDataTypeWithWeight = {
               ...res_.data,
+              off: String(res_.data.off),
+              final_price: String(res_.data.final_price),
               weight: parsedJson.weight,
             };
+            console.log("weight -> ", data_);
             dispatch(setProductResponse(data_));
           })
           .catch((e) => console.log("axios er ", e));

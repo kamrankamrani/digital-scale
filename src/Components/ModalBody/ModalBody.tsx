@@ -7,7 +7,7 @@ import useSearchItems from "../CustomHooks/useSearchItems";
 import { useEffect, useState } from "react";
 
 export default function ModalBody() {
-  const imagesArr = useAppSelector((state) => state.product.alt_items);
+  const imagesArr = useAppSelector((state) => state.product);
   // const mockImageUrl = "/src/assets/lemon.jpg";
   const [searchValue, setSearchValue] = useState<string>("");
   const altimgs_ = useSearchItems(searchValue);
@@ -43,7 +43,7 @@ export default function ModalBody() {
           onChange={(e) => handleSearchItems(e.target.value)}
         />
       </div>
-      {imagesArr.map((value, index) => {
+      {/* {imagesArr.map((value, index) => {
         return (
           <>
             <div key={value.id} className="item">
@@ -61,7 +61,7 @@ export default function ModalBody() {
             <hr />
           </>
         );
-      })}
+      })} */}
     </div>
   );
 }
