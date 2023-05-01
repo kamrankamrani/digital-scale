@@ -41,8 +41,8 @@ export default function BuyButton() {
     <div className="button-container">
       <Button
         data-test="buy-button"
-        // disabled={disableButon}
-        className={`button ripple ${disableButon ? "disable" : ""}`}
+        disabled={disableButon}
+        className={`button ripple ${disableButon ? "" : ""}`}
         onClick={handleButtonClick}
       >
         چاپ
