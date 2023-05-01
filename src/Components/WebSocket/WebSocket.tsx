@@ -1,26 +1,21 @@
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import {
-  setWebSocketStatus,
-  // setWsSendMessage,
-} from "../../features/webSocketSlice/webSocketSlice";
+import { setWebSocketStatus } from "../../features/webSocketSlice/webSocketSlice";
 import {
   ProductDataType,
   ProductDataTypeWithWeight,
   RPIWebsocketMessage,
-  // wsSendMessageType,
 } from "../../Services/Types";
 import { setProductResponse } from "../../features/ProductSlice/ProductSlice";
 import {
   setDisableBuyButtonState,
-  setLoadingBuyButton,
   setPageLoadingState,
 } from "../../features/pageRenderSlice/pageRenderSlice";
-import "./Style/style.css";
 import { FetchImageRequest } from "../../Services/FetchRequest";
 import axios from "axios";
 import { RPI_SEND_IMAGE, UI_SERVER_ADDRESS } from "../../Services/Consts";
+import "./Style/style.css";
 
 export default function WebSocket() {
   const socketUrl = useAppSelector((state) => state.webSocket.socketUrl);
@@ -29,9 +24,6 @@ export default function WebSocket() {
   );
   const dispatch = useAppDispatch();
   const productDataFromRedux = useAppSelector((state) => state.product);
-  // const sendWsMessage = useAppSelector(
-  //   (state) => state.webSocket.wsSendMessage
-  // );
   // const imageUrl = "http://localhost:5173/image.jpg";
   // const imageUrl = `${UI_SERVER_ADDRESS}/${parsedJson.image_url}`;
 
@@ -49,7 +41,7 @@ export default function WebSocket() {
     };
   }, []);
 
-  const { readyState /*sendMessage*/ } = useWebSocket(socketUrl, {
+  const { readyState } = useWebSocket(socketUrl, {
     onMessage(event: WebSocketEventMap["message"]) {
       handleSocketMessage(event);
     },
@@ -81,11 +73,7 @@ export default function WebSocket() {
       // console.log("data format error! not message included", parsedJson);
       return;
     }
-
-    dispatch(setPageLoadingState(false)); //new message = loading false
     dispatch(setDisableBuyButtonState(true));
-    // setLoadingBuyButton(false);
-    // setLoadingBuyButton(false); //loading buy button for print = false
 
     if (parsedJson.message_type === "default") {
       console.log("default state");
@@ -111,47 +99,29 @@ export default function WebSocket() {
           })
           .then((res_) => {
             console.log("axios res ", res_.data);
-            console.log("weight =>", parsedJson.weight);
             const data_: ProductDataTypeWithWeight = {
               ...res_.data,
               off: String(res_.data.off),
               final_price: String(res_.data.final_price),
               weight: parsedJson.weight,
             };
-            console.log("weight -> ", data_);
+            dispatch(setPageLoadingState(false));
             dispatch(setProductResponse(data_));
           })
-          .catch((e) => console.log("axios er ", e));
+          .catch((e) => {
+            dispatch(setPageLoadingState(false));
+            console.log("axios er ", e);
+          });
       });
-      // dispatch(setProductResponse(parsedJson));
       dispatch(setDisableBuyButtonState(false));
     } else if (parsedJson.message_type === "loading") {
-      //start loading
       dispatch(setPageLoadingState(true));
-      // setLoadingBuyButton(false); //loading buy button for print = = false
-    } else if (parsedJson.message_type === "printing") {
-      // setLoadingBuyButton(false); //loading buy button for print = false
     }
   }
 
   useEffect(() => {
     dispatch(setWebSocketStatus(readyState));
   }, [readyState]);
-
-  // useEffect(() => {
-  //   if (sendWsMessage.isMessage) {
-  //     console.log("sending message", sendWsMessage.body);
-  //     sendMessage(JSON.stringify(sendWsMessage.body));
-  //     const defaultVal_: wsSendMessageType = {
-  //       isMessage: false,
-  //       body: {
-  //         client: "",
-  //         message: "",
-  //       },
-  //     };
-  //     dispatch(setWsSendMessage(defaultVal_));
-  //   }
-  // }, [sendWsMessage.isMessage]);
 
   return (
     <div
