@@ -9,6 +9,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { RequestApi } from "../../Services/RequestApi";
 import { RPI_TARE_API } from "../../Services/Consts";
 import "./Style/style.css";
+// import axios from "axios";
 
 export default function IconsMenu() {
   const dispatch = useAppDispatch();
@@ -24,6 +25,18 @@ export default function IconsMenu() {
   const reloadClick = async () => {
     location.reload();
     dispatch(setSideMenuOpen(false));
+    // const url =
+    //   "https://ir-appointment.visametric.com/ir/appointment-form/personal/getdate";
+    // const fd = new FormData();
+    // fd.append("consularid", "3");
+    // fd.append("exitid", "1");
+    // fd.append("servicetypeid", "1");
+    // fd.append("calendarType", "2");
+    // fd.append("totalperson", "1");
+    // axios
+    //   .post(url, fd)
+    //   .then((res) => console.log("res", res))
+    //   .catch((e) => console.log("e ", e));
   };
 
   return (

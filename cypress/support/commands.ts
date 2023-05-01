@@ -4,4 +4,8 @@
 //   return cy.get(`[data-test=${value}]`);
 // });
 
+// Cypress.Commands.add("confirmCaptcha", function () {
+
+//   })
+
 export {};

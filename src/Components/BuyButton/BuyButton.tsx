@@ -6,6 +6,7 @@ import { setLoadingBuyButton } from "../../features/pageRenderSlice/pageRenderSl
 import { RPI_PRINT_API } from "../../Services/Consts";
 import { SendDataToPrint } from "../../Services/RequestApi";
 import "./Style/style.css";
+import { Button } from "@mui/material";
 
 export default function BuyButton() {
   const disableButon = useAppSelector(
@@ -18,7 +19,7 @@ export default function BuyButton() {
   const dispatch = useAppDispatch();
 
   const handleButtonClick = () => {
-    dispatch(setLoadingBuyButton(true));
+    // dispatch(setLoadingBuyButton(true));
     // const msg: wsSendMessageType = {
     //   body: {
     //     client: "UI",
@@ -27,35 +28,35 @@ export default function BuyButton() {
     //   isMessage: true,
     // };
     // dispatch(setWsSendMessage(msg));
-    const reqBody: SendDataToPrintType = {
-      url: RPI_PRINT_API,
-      weight: productData.weight,
-      title: decodeURI(productData.title),
-      final_price: productData.final_price,
-      barcode: productData.barcode,
-    };
-    SendDataToPrint(reqBody)
-      .then((res) => {
-        console.log("rpi res => ", res);
-        dispatch(setLoadingBuyButton(false));
-      })
-      .catch((e) => {
-        console.log("rpi err =>", e);
-        dispatch(setLoadingBuyButton(false));
-      });
+    // const reqBody: SendDataToPrintType = {
+    //   url: RPI_PRINT_API,
+    //   weight: productData.weight,
+    //   title: decodeURI(productData.title),
+    //   final_price: productData.final_price,
+    //   barcode: productData.barcode,
+    // };
+    // SendDataToPrint(reqBody)
+    //   .then((res) => {
+    //     console.log("rpi res => ", res);
+    //     dispatch(setLoadingBuyButton(false));
+    //   })
+    //   .catch((e) => {
+    //     console.log("rpi err =>", e);
+    //     dispatch(setLoadingBuyButton(false));
+    //   });
   };
 
   return (
     <div className="button-container">
-      <button
+      <Button
         data-test="buy-button"
-        disabled={disableButon}
-        className={`button ${disableButon ? "disable" : ""}`}
+        // disabled={disableButon}
+        className={`button ripple ${!disableButon ? "disable" : ""}`}
         onClick={handleButtonClick}
       >
         چاپ
         {loadingButtonState && <ButtonLoadingLayout />}
-      </button>
+      </Button>
     </div>
   );
 }
