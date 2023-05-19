@@ -2,16 +2,81 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { setSearchModalOpen } from "../../features/pageRenderSlice/pageRenderSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import defaultImage from "../../assets/watermelon.svg";
-import "./Style/style.css";
 import useSearchItems from "../CustomHooks/useSearchItems";
 import { useEffect, useState } from "react";
+import { ProductDataTypeWithWeight } from "../../Services/Types";
+import { setProductArrayResponse } from "../../features/ProductArraySlice/productArraySlice";
+import "./Style/style.css";
 
 export default function ModalBody() {
-  const imagesArr = useAppSelector((state) => state.product);
+  const productArray = useAppSelector(
+    (state) => state.ProductArraySlice.prArray
+  );
   // const mockImageUrl = "/src/assets/lemon.jpg";
   const [searchValue, setSearchValue] = useState<string>("");
   const altimgs_ = useSearchItems(searchValue);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const mockData: ProductDataTypeWithWeight[] = [
+      {
+        barcode: "123",
+        category: "sss",
+        final_price: "1000",
+        off: "0",
+        price: "1000",
+        title: "ماهی",
+        url: "",
+        vms: "",
+        weight: "10",
+      },
+      {
+        barcode: "123",
+        category: "sss",
+        final_price: "1000",
+        off: "0",
+        price: "1000",
+        title: "مرغ",
+        url: "",
+        vms: "",
+        weight: "10",
+      },
+      {
+        barcode: "123",
+        category: "sss",
+        final_price: "1000",
+        off: "0",
+        price: "1000",
+        title: "سوپ",
+        url: "",
+        vms: "",
+        weight: "10",
+      },
+      {
+        barcode: "123",
+        category: "sss",
+        final_price: "1000",
+        off: "0",
+        price: "1000",
+        title: "سوپ",
+        url: "",
+        vms: "",
+        weight: "10",
+      },
+      {
+        barcode: "123",
+        category: "sss",
+        final_price: "1000",
+        off: "0",
+        price: "1000",
+        title: "سوپ",
+        url: "",
+        vms: "",
+        weight: "10",
+      },
+    ];
+    dispatch(setProductArrayResponse(mockData));
+  }, []);
 
   useEffect(() => {
     console.log("data got! -> ", altimgs_);
@@ -43,25 +108,26 @@ export default function ModalBody() {
           onChange={(e) => handleSearchItems(e.target.value)}
         />
       </div>
-      {/* {imagesArr.map((value, index) => {
-        return (
-          <>
-            <div key={value.id} className="item">
-              <div>
-                <p>{value.title}</p>
+      <div className="items-container">
+        {productArray.map((value, index) => {
+          return (
+            <>
+              <div key={value.vms} className="item">
+                <div className="item-image-container">
+                  <img
+                    className="image"
+                    src={value.url.length ? value.url : defaultImage}
+                    alt={`img-${index}`}
+                  />
+                </div>
+                <div>
+                  <p>{value.title}</p>
+                </div>
               </div>
-              <div className="item-image-container">
-                <img
-                  className="image"
-                  src={value.url.length ? value.url : defaultImage}
-                  alt={`img-${index}`}
-                />
-              </div>
-            </div>
-            <hr />
-          </>
-        );
-      })} */}
+            </>
+          );
+        })}
+      </div>
     </div>
   );
 }

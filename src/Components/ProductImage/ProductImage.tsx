@@ -10,19 +10,17 @@ export default function ProductImage() {
   const showModal = useAppSelector(
     (state) => state.pageRenderSlice.searchModalOpen
   );
-  const imageUrl: string = useAppSelector((state) => state.product.url);
+  const imageUrl = useAppSelector((state) => state.product.url);
   const loadingState = useAppSelector(
     (state) => state.pageRenderSlice.loadingState
   );
   const dispatch = useAppDispatch();
 
-  // const mockImageUrl = "https://picsum.photos/id/237/1000/1000";
-
   useEffect(() => {
     if (imageUrl) {
       dispatch(setDisableAlterButtonState(false));
     } else {
-      dispatch(setDisableAlterButtonState(true));
+      dispatch(setDisableAlterButtonState(false));
     }
   }, [imageUrl]);
 
