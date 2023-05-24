@@ -40,6 +40,7 @@ export interface pageRenderSliceType {
   loadingState: boolean;
   searchModalOpen: boolean;
   loadingBuyButton: boolean;
+  keyboardModalOpen: boolean;
 }
 
 export interface RequestApiType {

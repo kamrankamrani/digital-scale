@@ -1,21 +1,30 @@
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import { setSearchModalOpen } from "../../features/pageRenderSlice/pageRenderSlice";
+import {
+  setKeyboardModalOpen,
+  setSearchModalOpen,
+} from "../../features/pageRenderSlice/pageRenderSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import defaultImage from "../../assets/watermelon.svg";
 import useSearchItems from "../CustomHooks/useSearchItems";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ProductDataTypeWithWeight } from "../../Services/Types";
 import { setProductArrayResponse } from "../../features/ProductArraySlice/productArraySlice";
 import "./Style/style.css";
+import KeyboardModal from "../KeyboardModal/KeyboardModal";
+import KeyboardWrapper from "../KeyboardBody/KeyboardWrapper";
 
 export default function ModalBody() {
   const productArray = useAppSelector(
     (state) => state.ProductArraySlice.prArray
   );
+  const showKeyModal = useAppSelector(
+    (state) => state.pageRenderSlice.keyboardModalOpen
+  );
   // const mockImageUrl = "/src/assets/lemon.jpg";
   const [searchValue, setSearchValue] = useState<string>("");
   const altimgs_ = useSearchItems(searchValue);
   const dispatch = useAppDispatch();
+  const keyboard = useRef<any>(null);
 
   useEffect(() => {
     const mockData: ProductDataTypeWithWeight[] = [
@@ -93,7 +102,14 @@ export default function ModalBody() {
 
   const handleSearchItems = (value: string) => {
     // useSearchItems(value);
+    if (keyboard.current) {
+      keyboard.current.setInput(value);
+    }
     setSearchValue(value);
+  };
+
+  const handleOnSearchInputClick = () => {
+    dispatch(setKeyboardModalOpen(true));
   };
 
   return (
@@ -103,8 +119,10 @@ export default function ModalBody() {
       </div>
       <div className="input-container">
         <input
+          id="search-input"
           type="text"
           value={searchValue}
+          onClick={handleOnSearchInputClick}
           onChange={(e) => handleSearchItems(e.target.value)}
         />
       </div>
@@ -128,6 +146,11 @@ export default function ModalBody() {
           );
         })}
       </div>
+
+      {/* {showKeyModal && <KeyboardModal />} */}
+      {showKeyModal && (
+        <KeyboardWrapper keyboardRef={keyboard} onChange={setSearchValue} />
+      )}
     </div>
   );
 }

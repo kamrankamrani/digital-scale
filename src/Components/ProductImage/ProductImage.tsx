@@ -20,7 +20,7 @@ export default function ProductImage() {
     if (imageUrl) {
       dispatch(setDisableAlterButtonState(false));
     } else {
-      dispatch(setDisableAlterButtonState(false));
+      dispatch(setDisableAlterButtonState(false)); //true
     }
   }, [imageUrl]);
 
